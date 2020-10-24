@@ -2,12 +2,17 @@ import React, { Component, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
+
 import '../../node_modules/font-awesome/scss/font-awesome.scss';
 
 import Loader from './layout/Loader'
 import Aux from "../hoc/_Aux";
 import ScrollToTop from './layout/ScrollToTop';
 import routes from "../route";
+
+//Components
+import SignIn from "./components/Authentication/SignIn"
+import Logout from "./components/Authentication/Logout";
 
 const AdminLayout = Loadable({
     loader: () => import('./layout/AdminLayout'),
@@ -35,7 +40,10 @@ class App extends Component {
                     <Suspense fallback={<Loader/>}>
                         <Switch>
                             {menu}
-                            <Route path="/" component={AdminLayout} />
+                            <Route exact path="/" component={SignIn} />
+                            <Route exact path="/login" component={SignIn} />
+                            <Route exact path="/dash" component={AdminLayout} />
+                            <Route exact path="/logout" component={Logout} />    
                         </Switch>
                     </Suspense>
                 </ScrollToTop>

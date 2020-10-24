@@ -16,6 +16,22 @@ import './app.scss';
 
 class AdminLayout extends Component {
 
+    constructor(){
+        super();
+
+        // Authentication setup
+        const token = localStorage.getItem("token");
+
+        let isAuthenticated = true;
+        if(token == null){
+            isAuthenticated=false;
+        }
+
+        this.state = {
+            isAuthenticated
+        }
+    }
+
     fullScreenExitHandler = () => {
         if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
             this.props.onFullScreenExit();
@@ -35,6 +51,11 @@ class AdminLayout extends Component {
     }
 
     render() {
+
+        // Authentication check
+        if(this.state.isAuthenticated ===false){
+            return <Redirect to="/" />
+        }
 
         /* full screen exit call */
         document.addEventListener('fullscreenchange', this.fullScreenExitHandler);
